@@ -1,11 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
-import 'dotenv';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   const port = process.env.PORT || 4000;
   const host = process.env.HOST || 'http://localhost';
   await app.listen(port);

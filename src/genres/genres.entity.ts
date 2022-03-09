@@ -4,7 +4,8 @@ import {
   Entity,
   BaseEntity,
   PrimaryGeneratedColumn,
-  ManyToOne,
+  ManyToMany,
+  JoinTable,
   CreateDateColumn,
 } from 'typeorm';
 
@@ -14,11 +15,12 @@ export class GenresEntity extends BaseEntity {
   id: number;
 
   @Column()
-  genre_id: number;
+  genreId: number;
 
   @CreateDateColumn()
-  createDate: string;
+  createDate: Date;
 
-  @ManyToOne((type) => UserEntity, (user) => user.genres)
-  user: UserEntity;
+  @ManyToMany(() => UserEntity)
+  @JoinTable()
+  users: UserEntity[];
 }
