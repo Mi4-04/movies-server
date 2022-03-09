@@ -19,6 +19,7 @@ export class GenresEntity extends BaseEntity {
   @CreateDateColumn({ name: 'create_date' })
   createDate: Date;
 
-  @ManyToMany(() => UserEntity, users => users.genres)
+  @Column({ type: 'int', name: 'users_id', array: true, default: {} })
+  @ManyToMany(() => UserEntity, (users) => users.genres)
   users: UserEntity[];
 }

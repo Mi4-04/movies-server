@@ -25,9 +25,11 @@ export class UserEntity extends BaseEntity {
   @CreateDateColumn({ name: 'create_date' })
   createDate: Date;
 
+  @Column({ type: 'int', name: 'genres_id', array: true, default: {} })
   @ManyToMany(() => GenresEntity, (genres) => genres.users)
   genres: GenresEntity[];
 
+  @Column({ type: 'int', name: 'movies_id', array: true, default: {} })
   @ManyToMany(() => FavMoviesEntity, (favMovies) => favMovies.users)
   favMovies: FavMoviesEntity[];
 }
