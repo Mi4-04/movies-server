@@ -5,7 +5,6 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   ManyToMany,
-  JoinTable,
   CreateDateColumn,
 } from 'typeorm';
 
@@ -14,16 +13,15 @@ export class FavMoviesEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  movieId: number;
+  @Column({ name: 'movies_id' })
+  moviesId: number;
 
-  @Column()
+  @Column({ name: 'watched' })
   watched: boolean;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'create_date' })
   createDate: Date;
 
   @ManyToMany(() => UserEntity)
-  @JoinTable()
   users: UserEntity[];
 }

@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
   Unique,
   ManyToMany,
-  JoinTable,
   CreateDateColumn,
 } from 'typeorm';
 
@@ -17,20 +16,18 @@ export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column({ name: 'login', unique: true })
   login: string;
 
-  @Column({ nullable: false })
+  @Column({ name: 'password', nullable: false })
   password: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'create_date' })
   createDate: Date;
 
   @ManyToMany(() => GenresEntity)
-  @JoinTable()
   genres: GenresEntity[];
 
   @ManyToMany(() => FavMoviesEntity)
-  @JoinTable()
   favMovies: FavMoviesEntity[];
 }
