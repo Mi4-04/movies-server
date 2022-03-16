@@ -20,7 +20,7 @@ export class UserService {
   }: UserEntity): Promise<SignInInfoDto> {
     const user: UserDto = { id, login, password };
     const secret = process.env.JWT_SECRET;
-    return { access_token: await jwt.sign(user, secret) };
+    return { accessToken: await jwt.sign(user, secret) };
   }
 
   async createUser(login: string, password: string) {
@@ -31,7 +31,7 @@ export class UserService {
     return await this.userRepository.findOne({ login });
   }
 
-  async signInService(login: string, password: string) {
+  async signIn(login: string, password: string) {
     let user = await this.getUserByLogin(login);
 
     if (!user) {

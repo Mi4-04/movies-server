@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GenresEntity } from './genres.entity';
 import { GenresService } from './genres.service';
-import { GenresResolver } from './genres.resolver';
+
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
@@ -13,6 +13,6 @@ import { HttpModule } from '@nestjs/axios';
       maxRedirects: 5,
     }),
   ],
-  providers: [GenresService, GenresResolver],
+  providers: [GenresService],
 })
 export class GenresModule {}

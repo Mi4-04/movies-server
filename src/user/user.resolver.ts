@@ -16,6 +16,6 @@ export class UserResolver {
     @Args('login') login: string,
     @Args('password') password: string,
   ) {
-    return await this.userService.signInService(login, password);
+    return await this.userService.signIn(login, password);
   }
 }
