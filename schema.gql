@@ -23,11 +23,15 @@ type GenresEntity {
 }
 
 type Mutation {
-  signIn(login: String!, password: String!): String!
+  signIn(login: String!, password: String!): SignInInfoDto!
 }
 
 type Query {
   sayHello: String!
+}
+
+type SignInInfoDto {
+  access_token: String!
 }
 
 type UserEntity {

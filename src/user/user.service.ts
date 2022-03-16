@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
 import { UserEntity } from './user.entity';
 import { UserDto } from './dto/user.dto';
+import { SignInInfoDto } from './dto/sign-in-info.dto';
 
 @Injectable()
 export class UserService {
@@ -12,17 +13,30 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  createToken({ id, login, password }: UserEntity) {
+  async createToken({
+    id,
+    login,
+    password,
+  }: UserEntity): Promise<SignInInfoDto> {
     const user: UserDto = { id, login, password };
     const secret = process.env.JWT_SECRET;
-    return jwt.sign(user, secret);
+    return { access_token: await jwt.sign(user, secret) };
   }
 
-  createUser(login: string, password: string) {
-    return this.userRepository.create({ login, password }).save();
+  async createUser(login: string, password: string) {
+    return await this.userRepository.create({ login, password }).save();
   }
 
-  getUserByLogin(login: string) {
-    return this.userRepository.findOne({ login });
+  async getUserByLogin(login: string) {
+    return await this.userRepository.findOne({ login });
+  }
+
+  async signInService(login: string, password: string) {
+    let user = await this.getUserByLogin(login);
+
+    if (!user) {
+      user = await this.createUser(login, password);
+    }
+    return this.createToken(user);
   }
 }
