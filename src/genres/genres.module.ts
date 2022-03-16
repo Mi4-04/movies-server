@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GenresEntity } from './genres.entity';
-import { GenresService } from './genres.service';
 
 import { HttpModule } from '@nestjs/axios';
 
@@ -13,6 +12,6 @@ import { HttpModule } from '@nestjs/axios';
       maxRedirects: 5,
     }),
   ],
-  providers: [GenresService],
+  providers: [],
 })
 export class GenresModule {}

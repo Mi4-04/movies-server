@@ -23,15 +23,15 @@ export class UserService {
     return { accessToken: await jwt.sign(user, secret) };
   }
 
-  async createUser(login: string, password: string) {
+  async createUser(login: string, password: string): Promise<UserEntity> {
     return await this.userRepository.create({ login, password }).save();
   }
 
-  async getUserByLogin(login: string) {
+  async getUserByLogin(login: string): Promise<UserEntity> {
     return await this.userRepository.findOne({ login });
   }
 
-  async signIn(login: string, password: string) {
+  async signIn(login: string, password: string): Promise<SignInInfoDto> {
     let user = await this.getUserByLogin(login);
 
     if (!user) {
