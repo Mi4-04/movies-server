@@ -7,12 +7,34 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type FavMoviesDto {
+  adult: Boolean!
+  backdrop_path: String!
+  genre_ids: [Float!]!
+  id: Float!
+  original_language: String!
+  original_title: String!
+  overview: String!
+  popularity: Float!
+  poster_path: String!
+  release_date: String
+  title: String!
+  video: Boolean!
+  vote_average: Float!
+  vote_count: Float!
+}
+
 type FavMoviesEntity {
   createDate: DateTime!
   id: ID!
   moviesId: Float!
-  users: [UserEntity!]!
+  user: UserEntity!
   watched: Boolean!
+}
+
+type GenreDto {
+  id: Float
+  name: String
 }
 
 type GenresEntity {
@@ -23,10 +45,16 @@ type GenresEntity {
 }
 
 type Mutation {
+  addFavMovies(id: Float!): FavMoviesEntity!
+  removeFavMovies(id: Float!): FavMoviesEntity!
   signIn(login: String!, password: String!): SignInInfoDto!
+  updateWatched(id: Float!): FavMoviesEntity!
 }
 
 type Query {
+  genres: [GenreDto!]!
+  movie(id: Float!): FavMoviesDto!
+  movies(genresIds: [Float!]!, voteAverage: Float!, year: String!): [FavMoviesDto!]!
   sayHello: String!
 }
 
