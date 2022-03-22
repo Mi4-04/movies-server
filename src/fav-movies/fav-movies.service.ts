@@ -4,10 +4,11 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { FavMoviesDto } from './dto/fav-movies.dto';
+import { API_URL } from 'src/constant/constant';
 
 @Injectable()
 export class FavMoviesService {
-  private apiUrl = 'https://api.themoviedb.org/3';
+  private apiUrl = API_URL
 
   constructor(private http: HttpService) {}
 
@@ -25,7 +26,7 @@ export class FavMoviesService {
       .pipe(map((res) => res.data.results));
   }
 
-  getMoviesDetals(id: number): Observable<AxiosResponse<FavMoviesDto>> {
+  getMoviesDetails(id: number): Observable<AxiosResponse<FavMoviesDto>> {
     return this.http
       .get(
         `${this.apiUrl}/movie/${id}?api_key=${process.env.API_KEY}&language=en-US`,

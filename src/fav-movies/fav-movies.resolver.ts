@@ -7,7 +7,7 @@ export class FavMoviesResolver {
   constructor(private favMoviesService: FavMoviesService) {}
 
   @Query(() => [FavMoviesDto])
-  movies(
+  getAllMovies(
     @Args('genresIds', { type: () => [Number] }) genresIds: number[],
     @Args('year') year: string,
     @Args('voteAverage') voteAverage: number,
@@ -16,7 +16,7 @@ export class FavMoviesResolver {
   }
 
   @Query(() => FavMoviesDto)
-  movie(@Args('id') id: number) {
-    return this.favMoviesService.getMoviesDetals(id);
+  getMovieDetails(@Args('id') id: number) {
+    return this.favMoviesService.getMoviesDetails(id);
   }
 }

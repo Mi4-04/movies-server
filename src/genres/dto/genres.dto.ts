@@ -4,6 +4,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 export class GenreDto {
   @Field({ nullable: true })
   id: number;
+
   @Field({ nullable: true })
   name: string;
 }

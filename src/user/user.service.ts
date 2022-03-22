@@ -1,6 +1,10 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {  Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
 import { UserEntity } from './user.entity';
 import { UserDto } from './dto/user.dto';
@@ -50,7 +54,7 @@ export class UserService {
     { login }: UserEntity,
   ): Promise<FavMoviesEntity> {
     let user = await this.getUserByLogin(login);
-    this.favMoviesService.getMoviesDetals(id);
+    this.favMoviesService.getMoviesDetails(id);
 
     const favMoviesEntity: FavMoviesEntity = new FavMoviesEntity();
     favMoviesEntity.moviesId = id;
@@ -65,7 +69,7 @@ export class UserService {
     }
   }
 
-  async updateFavMovies(
+  async setFavMovieAsWatched(
     id: number,
     { login }: UserEntity,
   ): Promise<FavMoviesEntity> {
@@ -83,7 +87,7 @@ export class UserService {
       await movie.save();
       return movie;
     } catch (e) {
-      console.log(e);
+      throw new InternalServerErrorException();
     }
   }
 
@@ -94,11 +98,12 @@ export class UserService {
       },
     });
 
-    if(!movie){
-      throw new BadRequestException('Movie not found')
+    if (!movie) {
+     throw  new BadRequestException('Movie not found')
     }
 
     await this.favMoviesRepository.delete(movie.id);
+    
     return movie;
   }
 }

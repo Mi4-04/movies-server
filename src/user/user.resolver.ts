@@ -38,7 +38,7 @@ export class UserResolver {
     @Args('id') id: number,
     @Context('user') user: UserEntity,
   ) {
-    return await this.userService.updateFavMovies(id, user);
+    return await this.userService.setFavMovieAsWatched(id, user);
   }
 
   @Mutation(() => FavMoviesEntity)

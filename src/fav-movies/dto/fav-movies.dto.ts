@@ -4,30 +4,43 @@ import { ObjectType, Field } from '@nestjs/graphql';
 export class FavMoviesDto {
   @Field()
   adult: boolean;
+
   @Field()
-  backdrop_path: string;
+  backdropPath: string;
+
   @Field(() => [Number])
-  genre_ids: number[];
+  genreIds: number[];
+
   @Field()
   id: number;
+
   @Field()
-  original_language: string;
+  originalLanguage: string;
+
   @Field()
-  original_title: string;
+  originalTitle: string;
+
   @Field()
   overview: string;
+
   @Field()
   popularity: number;
+
   @Field()
-  poster_path: string;
+  posterPath: string;
+
   @Field({ nullable: true })
-  release_date: string;
+  releaseDate: string;
+
   @Field()
   title: string;
+
   @Field()
   video: boolean;
+
   @Field()
-  vote_average: number;
+  voteAverage: number;
+
   @Field()
-  vote_count: number;
+  voteCount: number;
 }

@@ -4,10 +4,11 @@ import { HttpService } from '@nestjs/axios';
 import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { GenreDto } from './dto/genres.dto';
+import { API_URL } from 'src/constant/constant';
 
 @Injectable()
 export class GenresService {
-  private apiUrl = 'https://api.themoviedb.org/3';
+  private apiUrl = API_URL
 
   constructor(private http: HttpService) {}
 
