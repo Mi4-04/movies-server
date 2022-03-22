@@ -3,15 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GenresEntity } from './genres.entity';
 
 import { HttpModule } from '@nestjs/axios';
+import { GenresService } from './genres.service';
+import { GenresResolver } from './genres.resolver';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([GenresEntity]),
-    HttpModule.register({
-      timeout: 5000,
-      maxRedirects: 5,
-    }),
+    HttpModule
   ],
-  providers: [],
+  providers: [GenresService, GenresResolver],
 })
 export class GenresModule {}

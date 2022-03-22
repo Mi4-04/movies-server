@@ -8,6 +8,7 @@ import {
   Unique,
   ManyToMany,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
@@ -32,12 +33,10 @@ export class UserEntity extends BaseEntity {
   createDate: Date;
 
   @Field(() => [GenresEntity])
-  @Column({ type: 'int', name: 'genres_id', array: true, default: {} })
-  @ManyToMany(() => GenresEntity, (genres) => genres.users)
+  @OneToMany(() => GenresEntity, (genres) => genres.users)
   genres: GenresEntity[];
 
   @Field(() => [FavMoviesEntity])
-  @Column({ type: 'int', name: 'movies_id', array: true, default: {} })
-  @ManyToMany(() => FavMoviesEntity, (favMovies) => favMovies.users)
+  @OneToMany(() => FavMoviesEntity, (favMovies) => favMovies.user)
   favMovies: FavMoviesEntity[];
 }

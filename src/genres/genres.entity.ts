@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   CreateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
@@ -25,7 +26,6 @@ export class GenresEntity extends BaseEntity {
   createDate: Date;
 
   @Field(() => [UserEntity])
-  @Column({ type: 'int', name: 'users_id', array: true, default: {} })
-  @ManyToMany(() => UserEntity, (users) => users.genres)
-  users: UserEntity[];
+  @ManyToOne(() => UserEntity, (users) => users.genres)
+  users: UserEntity;
 }

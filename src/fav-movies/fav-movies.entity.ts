@@ -4,10 +4,10 @@ import {
   Entity,
   BaseEntity,
   PrimaryGeneratedColumn,
-  ManyToMany,
   CreateDateColumn,
+  ManyToOne,
 } from 'typeorm';
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ID,  ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 @Entity('fav-movies')
@@ -17,19 +17,18 @@ export class FavMoviesEntity extends BaseEntity {
   id: number;
 
   @Field()
-  @Column({ name: 'movies_id' })
+  @Column({ name: 'movies_id', nullable: true })
   moviesId: number;
 
   @Field()
-  @Column({ name: 'watched' })
+  @Column({ name: 'watched', default: false })
   watched: boolean;
 
   @Field()
   @CreateDateColumn({ name: 'create_date' })
   createDate: Date;
 
-  @Field(() => [UserEntity])
-  @Column({ type: 'int', name: 'users_id', array: true, default: {} })
-  @ManyToMany(() => UserEntity, (users) => users.favMovies)
-  users: UserEntity[];
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity, (user) => user.favMovies)
+  user: UserEntity;
 }
