@@ -34,11 +34,8 @@ export class UserResolver {
 
   @Mutation(() => FavMoviesEntity)
   @UseGuards(AuthGuard)
-  async updateWatched(
-    @Args('id') id: number,
-    @Context('user') user: UserEntity,
-  ) {
-    return await this.userService.setFavMovieAsWatched(id, user);
+  async updateWatched(@Args('id') id: number) {
+    return await this.userService.setFavMovieAsWatched(id);
   }
 
   @Mutation(() => FavMoviesEntity)

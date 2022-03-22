@@ -53,8 +53,7 @@ export class UserService {
     id: number,
     { login }: UserEntity,
   ): Promise<FavMoviesEntity> {
-    let user = await this.getUserByLogin(login);
-    this.favMoviesService.getMoviesDetails(id);
+    const user = await this.getUserByLogin(login);
 
     const favMoviesEntity: FavMoviesEntity = new FavMoviesEntity();
     favMoviesEntity.moviesId = id;
@@ -69,20 +68,10 @@ export class UserService {
     }
   }
 
-  async setFavMovieAsWatched(
-    id: number,
-    { login }: UserEntity,
-  ): Promise<FavMoviesEntity> {
-    let user = await this.getUserByLogin(login);
-
-    const movie = await this.favMoviesRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
-
+  async setFavMovieAsWatched(id: number): Promise<FavMoviesEntity> {
+    const movie = await this.favMoviesRepository.findOne({ id });
     movie.watched = true;
-    movie.user = user;
+
     try {
       await movie.save();
       return movie;
@@ -92,18 +81,14 @@ export class UserService {
   }
 
   async removeFavMovies(id: number): Promise<FavMoviesEntity> {
-    const movie = await this.favMoviesRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
+    const movie = await this.favMoviesRepository.findOne({ id });
 
     if (!movie) {
-     throw  new BadRequestException('Movie not found')
+      throw new BadRequestException('Movie not found');
     }
 
     await this.favMoviesRepository.delete(movie.id);
-    
+
     return movie;
   }
 }
