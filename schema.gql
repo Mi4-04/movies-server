@@ -10,18 +10,18 @@ scalar DateTime
 type FavMoviesDto {
   adult: Boolean!
   backdropPath: String!
-  genreIds: [Float!]!
+  genre_ids: [Float!]!
   id: Float!
-  originalLanguage: String!
-  originalTitle: String!
+  original_language: String!
+  original_title: String!
   overview: String!
   popularity: Float!
-  posterPath: String!
-  releaseDate: String
+  poster_path: String!
+  release_date: String
   title: String!
   video: Boolean!
-  voteAverage: Float!
-  voteCount: Float!
+  vote_average: Float!
+  vote_count: Float!
 }
 
 type FavMoviesEntity {
@@ -53,7 +53,7 @@ type Mutation {
 
 type Query {
   genres: [GenreDto!]!
-  getAllMovies(genresIds: [Float!]!, voteAverage: Float!, year: String!): [FavMoviesDto!]!
+  getAllMovies(genresIds: [Float!]!, page: Float!, voteAverage: Float!, year: String!): [FavMoviesDto!]!
   getMovieDetails(id: Float!): FavMoviesDto!
   sayHello: String!
 }

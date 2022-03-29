@@ -8,7 +8,7 @@ import { API_URL } from 'src/constant/constant';
 
 @Injectable()
 export class FavMoviesService {
-  private apiUrl = API_URL
+  private apiUrl = API_URL;
 
   constructor(private http: HttpService) {}
 
@@ -16,12 +16,13 @@ export class FavMoviesService {
     genresIds: number[],
     year: string,
     voteAverage: number,
+    page: number,
   ): Observable<AxiosResponse<FavMoviesDto[]>> {
     return this.http
       .get(
         `${this.apiUrl}/discover/movie?api_key=${
           process.env.API_KEY
-        }&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genresIds.join()}&year=${year}&vote_average.gte=${voteAverage}`,
+        }&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genresIds.join()}&year=${year}&vote_average.gte=${voteAverage}`,
       )
       .pipe(map((res) => res.data.results));
   }
@@ -33,5 +34,4 @@ export class FavMoviesService {
       )
       .pipe(map((res) => res.data));
   }
-
 }

@@ -68,8 +68,8 @@ export class UserService {
     }
   }
 
-  async setFavMovieAsWatched(id: number): Promise<FavMoviesEntity> {
-    const movie = await this.favMoviesRepository.findOne({ id });
+  async setFavMovieAsWatched(moviesId: number): Promise<FavMoviesEntity> {
+    const movie = await this.favMoviesRepository.findOne({ moviesId });
     movie.watched = true;
 
     try {
@@ -80,8 +80,8 @@ export class UserService {
     }
   }
 
-  async removeFavMovies(id: number): Promise<FavMoviesEntity> {
-    const movie = await this.favMoviesRepository.findOne({ id });
+  async removeFavMovies(moviesId: number): Promise<FavMoviesEntity> {
+    const movie = await this.favMoviesRepository.findOne({ moviesId });
 
     if (!movie) {
       throw new BadRequestException('Movie not found');

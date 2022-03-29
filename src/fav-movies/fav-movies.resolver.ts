@@ -11,8 +11,14 @@ export class FavMoviesResolver {
     @Args('genresIds', { type: () => [Number] }) genresIds: number[],
     @Args('year') year: string,
     @Args('voteAverage') voteAverage: number,
+    @Args('page') page: number,
   ) {
-    return this.favMoviesService.getAllMovies(genresIds, year, voteAverage);
+    return this.favMoviesService.getAllMovies(
+      genresIds,
+      year,
+      voteAverage,
+      page,
+    );
   }
 
   @Query(() => FavMoviesDto)
