@@ -16,7 +16,7 @@ type FavMoviesDto {
   original_title: String!
   overview: String!
   popularity: Float!
-  poster_path: String!
+  poster_path: String
   release_date: String
   title: String!
   video: Boolean!

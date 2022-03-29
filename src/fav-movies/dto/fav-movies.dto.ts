@@ -8,17 +8,17 @@ export class FavMoviesDto {
   @Field()
   backdropPath: string;
 
-  @Field(() => [Number])
+  @Field(() => [Number], { name: 'genre_ids' })
   genre_ids: number[];
 
   @Field()
   id: number;
 
-  @Field()
-  original_language: string;
+  @Field({ name: 'original_language' })
+  originalLanguage: string;
 
-  @Field()
-  original_title: string;
+  @Field({ name: 'original_title' })
+  originalTitle: string;
 
   @Field()
   overview: string;
@@ -26,11 +26,11 @@ export class FavMoviesDto {
   @Field()
   popularity: number;
 
-  @Field()
-  poster_path: string;
+  @Field({ name: 'poster_path', nullable: true })
+  posterPath: string;
 
-  @Field({ nullable: true })
-  release_date: string;
+  @Field({ name: 'release_date', nullable: true })
+  releaseDate: string;
 
   @Field()
   title: string;
@@ -38,9 +38,9 @@ export class FavMoviesDto {
   @Field()
   video: boolean;
 
-  @Field()
-  vote_average: number;
+  @Field({ name: 'vote_average' })
+  voteAverage: number;
 
-  @Field()
-  vote_count: number;
+  @Field({ name: 'vote_count' })
+  voteCount: number;
 }
