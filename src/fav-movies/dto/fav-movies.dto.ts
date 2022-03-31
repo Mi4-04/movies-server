@@ -43,4 +43,7 @@ export class FavMoviesDto {
 
   @Field({ name: 'voteCount' })
   vote_count: number;
+
+  @Field({ defaultValue: false })
+  watched: boolean;
 }

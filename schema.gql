@@ -22,6 +22,7 @@ type FavMoviesDto {
   video: Boolean!
   voteAverage: Float!
   voteCount: Float!
+  watched: Boolean!
 }
 
 type FavMoviesEntity {
