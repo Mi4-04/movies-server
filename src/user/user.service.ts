@@ -11,6 +11,9 @@ import { UserDto } from './dto/user.dto';
 import { SignInInfoDto } from './dto/sign-in-info.dto';
 import { FavMoviesService } from 'src/fav-movies/fav-movies.service';
 import { FavMoviesEntity } from 'src/fav-movies/fav-movies.entity';
+import { FavMoviesDto } from 'src/fav-movies/dto/fav-movies.dto';
+import { lastValueFrom, map } from 'rxjs';
+import { AxiosResponse } from 'axios';
 
 @Injectable()
 export class UserService {
@@ -90,5 +93,30 @@ export class UserService {
     await this.favMoviesRepository.delete(movie.id);
 
     return movie;
+  }
+
+  async getFavMovies({
+    login,
+  }: UserEntity): Promise<AxiosResponse<FavMoviesDto, any>[]> {
+    const user = await this.getUserByLogin(login);
+
+    const movies = await this.favMoviesRepository.find({
+      where: { user: user },
+    });
+    const result = await Promise.all(
+      movies.map((movie) => {
+        let moviesDetails = this.favMoviesService.getMoviesDetails(
+          movie.moviesId,
+        );
+        let movieIdData = lastValueFrom(moviesDetails.pipe(map((res) => res)));
+        return movieIdData;
+      }),
+    );
+
+    try {
+      return result;
+    } catch (e) {
+      throw new InternalServerErrorException();
+    }
   }
 }

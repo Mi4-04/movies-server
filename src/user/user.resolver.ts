@@ -1,5 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
+import { FavMoviesDto } from 'src/fav-movies/dto/fav-movies.dto';
 import { FavMoviesEntity } from 'src/fav-movies/fav-movies.entity';
 import { SignInInfoDto } from './dto/sign-in-info.dto';
 import { AuthGuard } from './guard/auth.guard';
@@ -42,5 +43,11 @@ export class UserResolver {
   @UseGuards(AuthGuard)
   async removeFavMovies(@Args('id') id: number) {
     return this.userService.removeFavMovies(id);
+  }
+
+  @Query(() => [FavMoviesDto])
+  @UseGuards(AuthGuard)
+  async getFavMovies(@Context('user') user: UserEntity) {
+    return this.userService.getFavMovies(user);
   }
 }
