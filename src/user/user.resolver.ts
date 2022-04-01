@@ -1,10 +1,5 @@
-import { UseGuards } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
-import { FavMoviesDto } from 'src/fav-movies/dto/fav-movies.dto';
-import { FavMoviesEntity } from 'src/fav-movies/fav-movies.entity';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { SignInInfoDto } from './dto/sign-in-info.dto';
-import { AuthGuard } from './guard/auth.guard';
-import { UserEntity } from './user.entity';
 import { UserService } from './user.service';
 
 @Resolver('User')
@@ -22,32 +17,5 @@ export class UserResolver {
     @Args('password') password: string,
   ) {
     return await this.userService.signIn(login, password);
-  }
-
-  @Mutation(() => FavMoviesEntity)
-  @UseGuards(AuthGuard)
-  async addFavMovies(
-    @Args('id') id: number,
-    @Context('user') user: UserEntity,
-  ) {
-    return await this.userService.addFavMovies(id, user);
-  }
-
-  @Mutation(() => FavMoviesEntity)
-  @UseGuards(AuthGuard)
-  async updateWatched(@Args('id') id: number) {
-    return await this.userService.setFavMovieAsWatched(id);
-  }
-
-  @Mutation(() => FavMoviesEntity)
-  @UseGuards(AuthGuard)
-  async removeFavMovies(@Args('id') id: number) {
-    return this.userService.removeFavMovies(id);
-  }
-
-  @Query(() => [FavMoviesDto])
-  @UseGuards(AuthGuard)
-  async getFavMovies(@Context('user') user: UserEntity) {
-    return this.userService.getFavMovies(user);
   }
 }
