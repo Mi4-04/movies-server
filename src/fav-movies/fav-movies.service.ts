@@ -55,18 +55,15 @@ export class FavMoviesService {
     { login }: UserEntity,
   ): Promise<FavMoviesEntity> {
     const user = await this.userService.getUserByLogin(login);
-
-    const favMoviesEntity = this.favMoviesRepository.manager.create(
-      FavMoviesEntity,
-      {
-        moviesId: id,
-        watched: false,
-        user,
-      },
-    );
-
     try {
-      await favMoviesEntity.save();
+      const favMoviesEntity = await this.favMoviesRepository.manager.save(
+        FavMoviesEntity,
+        {
+          moviesId: id,
+          watched: false,
+          user,
+        },
+      );
       return favMoviesEntity;
     } catch (e) {
       throw new HttpException(
