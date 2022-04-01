@@ -12,7 +12,6 @@ import { UserService } from 'src/user/user.service';
   imports: [
     TypeOrmModule.forFeature([FavMoviesEntity, UserEntity]),
     HttpModule,
-    UsersModule,
   ],
   providers: [FavMoviesService, FavMoviesResolver, UserService],
 })
