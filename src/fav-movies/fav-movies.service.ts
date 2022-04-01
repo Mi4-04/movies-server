@@ -1,7 +1,8 @@
 import {
   BadRequestException,
   Injectable,
-  InternalServerErrorException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { Observable } from 'rxjs';
@@ -55,16 +56,23 @@ export class FavMoviesService {
   ): Promise<FavMoviesEntity> {
     const user = await this.userService.getUserByLogin(login);
 
-    const favMoviesEntity: FavMoviesEntity = new FavMoviesEntity();
-    favMoviesEntity.moviesId = id;
-    favMoviesEntity.watched = false;
-    favMoviesEntity.user = user;
+    const favMoviesEntity = this.favMoviesRepository.manager.create(
+      FavMoviesEntity,
+      {
+        moviesId: id,
+        watched: false,
+        user,
+      },
+    );
 
     try {
       await favMoviesEntity.save();
       return favMoviesEntity;
     } catch (e) {
-      throw new InternalServerErrorException();
+      throw new HttpException(
+        'UNPROCESSABLE_ENTITY',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
     }
   }
 
@@ -76,7 +84,10 @@ export class FavMoviesService {
       await movie.save();
       return movie;
     } catch (e) {
-      throw new InternalServerErrorException();
+      throw new HttpException(
+        'UNPROCESSABLE_ENTITY',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
     }
   }
 
@@ -84,11 +95,10 @@ export class FavMoviesService {
     const movie = await this.favMoviesRepository.findOne({ moviesId });
 
     if (!movie) {
-      throw new BadRequestException('Movie not found');
+      throw new BadRequestException();
     }
 
     await this.favMoviesRepository.delete(movie.id);
-
     return movie;
   }
 
