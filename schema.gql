@@ -54,7 +54,7 @@ type Mutation {
 
 type Query {
   genres: [GenreDto!]!
-  getAllMovies(genresIds: [Float!]!, page: Float!, voteAverage: Float!, year: String!): [FavMoviesDto!]!
+  getAllMovies(genresIds: [Float!]!, page: Float!, voteAverage: Float!, year: Float!): [FavMoviesDto!]!
   getFavMovies: [FavMoviesDto!]!
   getMovieDetails(id: Float!): FavMoviesDto!
   sayHello: String!

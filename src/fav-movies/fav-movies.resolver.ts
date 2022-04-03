@@ -13,7 +13,7 @@ export class FavMoviesResolver {
   @Query(() => [FavMoviesDto])
   getAllMovies(
     @Args('genresIds', { type: () => [Number] }) genresIds: number[],
-    @Args('year') year: string,
+    @Args('year') year: number,
     @Args('voteAverage') voteAverage: number,
     @Args('page') page: number,
   ) {

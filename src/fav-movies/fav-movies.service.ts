@@ -29,7 +29,7 @@ export class FavMoviesService {
 
   getAllMovies(
     genresIds: number[],
-    year: string,
+    year: number,
     voteAverage: number,
     page: number,
   ): Observable<AxiosResponse<FavMoviesDto[]>> {
