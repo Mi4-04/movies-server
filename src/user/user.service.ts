@@ -1,25 +1,16 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
 import { UserEntity } from './user.entity';
 import { UserDto } from './dto/user.dto';
 import { SignInInfoDto } from './dto/sign-in-info.dto';
-import { FavMoviesService } from 'src/fav-movies/fav-movies.service';
-import { FavMoviesEntity } from 'src/fav-movies/fav-movies.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
-    private favMoviesService: FavMoviesService,
-    @InjectRepository(FavMoviesEntity)
-    private favMoviesRepository: Repository<FavMoviesEntity>,
   ) {}
 
   async createToken({
@@ -47,48 +38,5 @@ export class UserService {
       user = await this.createUser(login, password);
     }
     return this.createToken(user);
-  }
-
-  async addFavMovies(
-    id: number,
-    { login }: UserEntity,
-  ): Promise<FavMoviesEntity> {
-    const user = await this.getUserByLogin(login);
-
-    const favMoviesEntity: FavMoviesEntity = new FavMoviesEntity();
-    favMoviesEntity.moviesId = id;
-    favMoviesEntity.watched = false;
-    favMoviesEntity.user = user;
-
-    try {
-      await favMoviesEntity.save();
-      return favMoviesEntity;
-    } catch (e) {
-      throw new InternalServerErrorException();
-    }
-  }
-
-  async setFavMovieAsWatched(id: number): Promise<FavMoviesEntity> {
-    const movie = await this.favMoviesRepository.findOne({ id });
-    movie.watched = true;
-
-    try {
-      await movie.save();
-      return movie;
-    } catch (e) {
-      throw new InternalServerErrorException();
-    }
-  }
-
-  async removeFavMovies(id: number): Promise<FavMoviesEntity> {
-    const movie = await this.favMoviesRepository.findOne({ id });
-
-    if (!movie) {
-      throw new BadRequestException('Movie not found');
-    }
-
-    await this.favMoviesRepository.delete(movie.id);
-
-    return movie;
   }
 }

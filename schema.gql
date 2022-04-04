@@ -16,12 +16,13 @@ type FavMoviesDto {
   originalTitle: String!
   overview: String!
   popularity: Float!
-  posterPath: String!
+  posterPath: String
   releaseDate: String
   title: String!
   video: Boolean!
   voteAverage: Float!
   voteCount: Float!
+  watched: Boolean!
 }
 
 type FavMoviesEntity {
@@ -53,7 +54,8 @@ type Mutation {
 
 type Query {
   genres: [GenreDto!]!
-  getAllMovies(genresIds: [Float!]!, voteAverage: Float!, year: String!): [FavMoviesDto!]!
+  getAllMovies(genresIds: [Float!]!, page: Float!, voteAverage: Float!, year: Float!): [FavMoviesDto!]!
+  getFavMovies: [FavMoviesDto!]!
   getMovieDetails(id: Float!): FavMoviesDto!
   sayHello: String!
 }
